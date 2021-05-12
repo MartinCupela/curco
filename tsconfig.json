@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "module": "commonjs",
+    "lib": [
+      "es2015",
+      "dom",
+      "esnext"
+    ],
+    "allowJs": true,
+    "checkJs": true,
+    "sourceMap": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node"
+  },
+  "include": [
+    "./packages*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
