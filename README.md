@@ -15,7 +15,7 @@ Services are to be deployed as Docker containers.
 2. Use ElasticSearch for tracking the client requests and request statistics aggregation
 
 
-#### Todo:
+#### Todos:
 
 **Libs**
 - ElastichSearch
@@ -29,6 +29,9 @@ Services are to be deployed as Docker containers.
 - packages/libs/fixerio
 - packages/services/api
 - packages/services/app/client
+
+**Setup ElasticSearch**
+- indexer
 
 **Deployment**
 - Dockerfile packages/services/app 
