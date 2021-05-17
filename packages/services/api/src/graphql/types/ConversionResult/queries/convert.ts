@@ -33,10 +33,11 @@ const convert: GraphQLFieldResolver<null, Context, ConversionArgs> =
     await logRequest({from, to, amount: _amount, elasticsearch});
 
     const rate = await getRate({id: rateId, destCurrency: to, fixerio, elasticsearch})
+    const currencies = await fixerio.currencies();
 
     return {
-      from: {id: from, description: ""},
-      to: {id: from, description: ""},
+      from: {id: from, description: currencies.success ? currencies.symbols[from]: ""},
+      to: {id: to, description: currencies.success ? currencies.symbols[to]: ""},
       rate,
       amount: _amount,
       result: _amount * rate
