@@ -1,10 +1,5 @@
 export type Currency = string;
 
-export interface LatestRatesOptions {
-  base: Currency;
-  symbols: Currency[];
-}
-
 export interface ConvertOptions {
   from: Currency;
   to: Currency;
@@ -17,6 +12,7 @@ export interface BaseResponsePayload {
 
 
 export interface LatestRatesResponse extends BaseResponsePayload{
+  success: true;
   "timestamp": number,
   "base": Currency,
   "date": string,
@@ -24,10 +20,12 @@ export interface LatestRatesResponse extends BaseResponsePayload{
 }
 
 export interface SupportedCurrenciesResponse extends BaseResponsePayload {
+  success: true;
   symbols: { [currency: string]: string }
 }
 
-export interface ErrorResponse extends BaseResponsePayload{
+export interface ErrorResponse {
+  success: false;
   error: {
     code: number;
     type: string;

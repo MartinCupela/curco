@@ -1,6 +1,8 @@
-import {ErrorResponse, LatestRatesOptions, LatestRatesResponse, SupportedCurrenciesResponse} from "./types";
+import {ErrorResponse, LatestRatesResponse, SupportedCurrenciesResponse} from "./types";
 import {get as config} from "config";
 import fetch from "node-fetch"
+import {existsSync, mkdirSync, readFileSync, writeFileSync} from "fs";
+import {dirname} from "path";
 
 export type SearchParams = { [param: string]: string }
 
@@ -17,7 +19,7 @@ export class FixerApi {
       throw new Error("Missing API KEY");
     }
 
-    const url = new URL("https://data.fixer.io/api" + endpoint);
+    const url = new URL("http://data.fixer.io/api" + endpoint);
 
     Object.entries({...searchParams, access_key: this.API_KEY}).forEach(
       ([key, value]) => url.searchParams.set(key, value)
@@ -40,12 +42,28 @@ export class FixerApi {
 
   }
 
-  latestRates = async (options: LatestRatesOptions): Promise<LatestRatesResponse | ErrorResponse> => {
-    return await this.request({endpoint: "/latest", searchParams: options as any});
+  latestRates = async (): Promise<LatestRatesResponse | ErrorResponse> => {
+    return await this.request({endpoint: "/latest"});
   }
 
   currencies = async (): Promise<SupportedCurrenciesResponse | ErrorResponse> => {
-    return await this.request({endpoint: "/symbols"});
+    const cacheFilePath = "./.cache/currencies.json"
+    let result;
+    if (!existsSync(cacheFilePath)) {
+        mkdirSync(dirname(cacheFilePath), {recursive: true});
+        const data = await this.request({endpoint: "/symbols"});
+        if (data.success) {
+          writeFileSync(cacheFilePath, JSON.stringify(data.symbols))
+          result= {success: true, symbols: data.symbols};
+        } else {
+          return data as ErrorResponse;
+        }
+    } else {
+      result = {success: true, symbols: JSON.parse(readFileSync(cacheFilePath).toString())};
+    }
+
+
+    return result as SupportedCurrenciesResponse;
   }
 }
 
