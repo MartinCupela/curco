@@ -49,7 +49,6 @@ const Stats = schema.createObjectTC({
       type: "Float",
       args: {currencyId: {type: "String!"}},
       resolve: async (_, {currencyId}, {elasticsearch}) => {
-        console.log("currencyId", currencyId)
         const a = await elasticsearch.search({
           index: "requests",
           body: {
@@ -65,7 +64,6 @@ const Stats = schema.createObjectTC({
             }
           }
         });
-        console.log(a.body.aggregations.total_converted.value)
         return a.body.aggregations.total_converted.value
       }
     },
