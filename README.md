@@ -17,21 +17,10 @@ Services are to be deployed as Docker containers.
 
 #### Todos:
 
-**Libs**
-- ElastichSearch
-    - schema 
-    - queries
-
-**App/Client**
-- API client interface (originally I planned to use Apollo GraphQL, but seems overkill)
-
 **Tests**
 - packages/libs/fixerio
 - packages/services/api
 - packages/services/app/client
-
-**Setup ElasticSearch**
-- indexer
 
 **Deployment**
 - Dockerfile packages/services/app 
