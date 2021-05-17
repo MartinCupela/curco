@@ -3,5 +3,3 @@ declare module CONFIG {
     URL: string
   }
 }
-
-declare var API: string;
