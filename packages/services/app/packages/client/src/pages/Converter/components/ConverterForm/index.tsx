@@ -6,8 +6,9 @@ import {Button} from "../../../../components/Button";
 import {buttonThemes} from "../../../../components/Button/themes";
 import {ErrorText} from "../../../../components/Form/components/ErrorText";
 import SwapHorizontalCircleIcon from "@material-ui/icons/SwapHorizontalCircle";
-import {Currency, useConverterFormController} from "./components/ConverterFormController";
-import ConversionResult from "./components/ConversionResult";
+import {useConverterFormController} from "./components/ConverterFormController";
+import ConversionResultArea from "./components/ConversionResultArea";
+import {Currency} from "../../../../services/graphql/queries/Currency";
 
 interface ConverterFormProps {
   currencies: Currency[];
@@ -21,9 +22,10 @@ const ConverterForm = ({currencies}: ConverterFormProps) => {
     handleAmountInputChange,
     handleCurrencyFieldChange,
     handleSubmit,
-    swapCurrencies
-  } = useConverterFormController()
-
+    swapCurrencies,
+    loading,
+    apolloError
+  } = useConverterFormController(currencies)
 
   return (
     <Panel>
@@ -38,8 +40,9 @@ const ConverterForm = ({currencies}: ConverterFormProps) => {
             autoHighlight
             value={selected.base}
             options={currencies}
-            getOptionLabel={(option) => (option as Currency).currencyId}
-            onChange={(event, value) => handleCurrencyFieldChange({value: value as any, field: "base"})}
+            getOptionLabel={(option) => (option as Currency).id}
+            getOptionSelected={(option, value) => (option as Currency).id === (value as Currency).id }
+            onInputChange={(event, value) => handleCurrencyFieldChange({value: value as any, field: "base"})}
             renderInput={(params) => <TextField {...params} label="From"/>}
           />
           <ErrorText msg={errors.base}/>
@@ -49,17 +52,21 @@ const ConverterForm = ({currencies}: ConverterFormProps) => {
           <CurrencyAutocomplete
             autoHighlight
             value={selected.quote}
-            options={currencies.filter(c => c.currencyId !== selected.base?.currencyId)}
-            getOptionLabel={(option) => (option as Currency).currencyId}
-            onChange={(event, value) => handleCurrencyFieldChange({value: value as any, field: "quote"})}
+            options={currencies.filter(c => c.id !== selected.base?.id)}
+            getOptionLabel={(option) => (option as Currency).id}
+            getOptionSelected={(option, value) => (option as Currency).id === (value as Currency).id }
+            onInputChange={(event, value) => handleCurrencyFieldChange({value: value as any, field: "quote"})}
             renderInput={(params) => <TextField {...params} label="To"/>}
           />
           <ErrorText msg={errors.quote}/>
         </Field>
       </Fields>
       <ButtonArea>
-        <ConversionResult result={conversionResult}/>
-        <Button onClick={handleSubmit} theme={buttonThemes.main}>Submit</Button>
+        <ConversionResultArea result={conversionResult}/>
+        <Button onClick={handleSubmit} theme={buttonThemes.main}
+                disabled={Object.values(errors).some(v => v)}>
+          Submit
+        </Button>
       </ButtonArea>
     </Panel>
   );

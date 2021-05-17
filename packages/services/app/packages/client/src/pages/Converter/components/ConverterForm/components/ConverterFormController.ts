@@ -1,9 +1,14 @@
-import React, {Dispatch, useState} from "react";
+import React, {useState} from "react";
+import {Currency} from "../../../../../services/graphql/queries/Currency";
+import {useLazyQuery} from "@apollo/client";
+import {
+  ConversionArgs,
+  ConversionResult,
+  ConversionResultData,
+  convert as convertQuery
+} from "../../../../../services/graphql/queries/ConversionResult";
+import {ApolloError} from "@apollo/client/errors";
 
-export type Currency = {
-  currencyId: string;
-  description: string;
-}
 
 type CurrencyWithAmount = { amount: string, currency: Currency }
 
@@ -24,18 +29,13 @@ interface ConverterFormValues {
 }
 
 
-interface ConverterFormState {
-  conversionResult: CurrencyConversionResult;
-  selected: ConverterFormValues;
-  setSelected: Dispatch<ConverterFormValues>;
-  errors: ErrorState;
-  setError: Dispatch<ErrorState>;
-}
-
 interface ConverterFormController {
-  conversionResult: CurrencyConversionResult;
+  conversionResult: ConversionResult | null;
   selected: ConverterFormValues;
   errors: ErrorState;
+  loading: boolean;
+  apolloError?: ApolloError;
+
 
   handleAmountInputChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void;
 
@@ -48,19 +48,15 @@ interface ConverterFormController {
 }
 
 interface HandleCurrencyFieldChangeArgs {
-  value?: Currency;
+  value?: string;
   field: "base" | "quote";
 }
 
-interface ValidateSubmissionArgs {
-  values: ConverterFormValues,
-  setError: Dispatch<ErrorState>
-}
 
-export const useConverterFormController = (): ConverterFormController => {
+export const useConverterFormController = (currencies: Currency[]): ConverterFormController => {
   const [selected, setSelected] = useState<ConverterFormValues>({amount: "1", base: null, quote: null});
   const [errors, setError] = useState<ErrorState>({});
-  const [conversionResult, setConversionResult] = useState<number | null>(null);
+  const [convert, {data, loading, error}] = useLazyQuery<ConversionResultData, ConversionArgs>(convertQuery);
 
   const validateAmountValue = (value: string): string | undefined => {
     const isFloatString = value.match(/^\d+(\.{1}\d*)?$/);
@@ -90,36 +86,56 @@ export const useConverterFormController = (): ConverterFormController => {
 
     if (errMsg) {
       setError({...errors, amount: errMsg})
-    } else if (errors.amount) {
-      setError({...errors, amount: undefined});
-      setSelected({...selected, amount: value})
+    } else {
+      setSelected({...selected, amount: value});
+      if (errors.amount) {
+        setError({...errors, amount: undefined});
+
+      }
     }
   }
 
   const handleCurrencyFieldChange = ({value, field}: HandleCurrencyFieldChangeArgs) => {
-    setSelected({
-      ...selected,
-      [field]: value
-    });
+
+    if (value) {
+      setSelected({
+        ...selected,
+        [field]: {id: value, description: currencies.find(({id}) => id === value)}
+      });
+
+      if (errors[field]) {
+        setError({...errors, [field]: undefined});
+      }
+    } else {
+      setSelected({
+        ...selected,
+        [field]: null
+      })
+    }
   }
 
 
   return {
     errors,
     selected,
-    conversionResult: {
-      base: {amount: "23.00", currency: {description: "US Dollar", currencyId: "USD"}},
-      quote: {amount: "18.93", currency: {description: "Euro", currencyId: "EUR"}}
-    },
+    loading,
+    apolloError: error,
+    conversionResult: data?.Conversion || null,
     handleAmountInputChange,
     handleCurrencyFieldChange,
     swapCurrencies: () => setSelected({amount: selected.amount, base: selected.quote, quote: selected.base}),
     handleSubmit: () => {
       const submissionErrors = validateSubmit(selected)
-      if (Object.keys(submissionErrors).length) {
+      if (Object.values(submissionErrors).some(v => v)) {
         setError(submissionErrors);
       } else {
-        // lazyQuery.then(r => setConversionResult(r))
+        convert({
+          variables: {
+            from: selected.base?.id as string,
+            to: selected.quote?.id as string,
+            amount: selected.amount ? parseFloat(selected.amount) : undefined
+          }
+        })
       }
     }
   }

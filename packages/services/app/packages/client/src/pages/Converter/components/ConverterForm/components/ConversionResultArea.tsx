@@ -1,20 +1,20 @@
 import React from "react";
-import {CurrencyConversionResult} from "./ConverterFormController";
 import styled from "styled-components";
 import {FadeInAnimation} from "../../../../../styles/animations";
+import {ConversionResult} from "../../../../../services/graphql/queries/ConversionResult";
 
 
 interface ConversionResultProps {
-  result: CurrencyConversionResult | null
+  result: ConversionResult | null
 }
 
-const ConversionResult = ({result}: ConversionResultProps) => {
+const ConversionResultArea = ({result}: ConversionResultProps) => {
   return (
     <ResultRoot>
       {result ? (
           <>
-            <BaseCurrency> {result.base.amount} {result.base.currency.description} =</BaseCurrency>
-            <QuoteCurrency>{result.quote.amount} {result.quote.currency.description}</QuoteCurrency>
+            <BaseCurrency> {result.amount} {result.from.description} =</BaseCurrency>
+            <QuoteCurrency>{result.result} {result.to.description}</QuoteCurrency>
           </>
         )
         : null}
@@ -22,7 +22,7 @@ const ConversionResult = ({result}: ConversionResultProps) => {
   )
 }
 
-export default ConversionResult;
+export default ConversionResultArea;
 
 export const ResultRoot = styled.div`
   font-weight: 700;
