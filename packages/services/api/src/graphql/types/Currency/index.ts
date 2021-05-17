@@ -5,6 +5,20 @@ export interface CurrencyFields {
   description: string;
 }
 
+const PopularCurrency = schema.createObjectTC({
+  name: "PopularCurrency",
+  fields: {
+    id: {
+      type: "String!",
+      resolve: c => c.id
+    },
+    count: {
+      type: "Int!",
+      resolve: c => parseInt(c.count)
+    },
+  }
+})
+
 const Currency = schema.createObjectTC({
   name: "Currency",
   fields: {
@@ -33,5 +47,7 @@ schema.Query.addFields({
     }
   }
 });
+
+
 
 export default Currency;

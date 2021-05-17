@@ -7,13 +7,28 @@ export type Currency = {
 
 export interface GetCurrenciesData {
   CurrencyList: Currency[];
+  Stats: {
+    MostPopularCurrency: { id: string; count: number };
+    totalConverted: number;
+    totalRequests: number;
+  }
+
 }
 
 export const getCurrencies = gql`
-  query GetCurrencies {
+  query GetCurrencies($currencyId:String!) {
     CurrencyList {
       id
       description
     }
+    Stats {
+      MostPopularCurrency {
+        id
+        count
+      }
+      totalConverted(currencyId:$currencyId) 
+      totalRequests 
+    }
+      
   }
 `

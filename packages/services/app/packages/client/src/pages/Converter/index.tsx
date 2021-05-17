@@ -10,18 +10,21 @@ import ErrorConverter from "./ErrorConverter";
 
 
 const CurrencyConverter = () => {
-  const {loading, data, error} = useQuery<GetCurrenciesData>(getCurrencies)
+  const {loading, data, error} = useQuery<GetCurrenciesData>(getCurrencies, {variables: {currencyId: "USD"}})
 
   let content = <LoadingConverter/>
   if (error) {
     content = <ErrorConverter/>
   } else if (data) {
-    content = <ConverterForm currencies={data.CurrencyList}/>
+    content = <>
+      <ConverterForm currencies={data.CurrencyList}/>
+      <StatsBar data={data}/>
+      </>
   }
   return <PageRoot>
     <Header/>
     <PageBody>{content}</PageBody>
-    <StatsBar/>
+
   </PageRoot>
 }
 

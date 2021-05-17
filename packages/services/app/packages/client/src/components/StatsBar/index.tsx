@@ -1,10 +1,16 @@
 import {StatsBarRoot} from "./components/Layout";
 import React from "react";
+import {GetCurrenciesData} from "../../services/graphql/queries/Currency";
 
-const StatsBar = () => {
+interface StatsBarProps {
+  data: GetCurrenciesData;
+}
+const StatsBar = ({data}: StatsBarProps) => {
   return (
     <StatsBarRoot>
-      Hello
+      <div>Most popular currency: {data.Stats.MostPopularCurrency.id}</div>
+      <div>Total requests: {data.Stats.totalRequests}</div>
+      <div>Total amount of money converted: {data.Stats.totalConverted}</div>
     </StatsBarRoot>
   )
 }
