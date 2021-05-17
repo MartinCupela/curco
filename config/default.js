@@ -1,6 +1,6 @@
 module.exports = {
   APP: {
-    API_URL: "<APP.API_URL>",
+    URL: "<APP.URL>",
     SERVER_PORT: "3000"
   },
   API: {
@@ -9,6 +9,7 @@ module.exports = {
     API_KEY: "<API.API_KEY>",
   },
   ELASTICSEARCH: {
-    HOST: "http://localhost:9200"
+    HOST: "http://localhost:9200",
+    PASSWORD: "<ELASTICSEARCH.PASSWORD>"
   }
 }
