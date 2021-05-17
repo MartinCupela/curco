@@ -1,9 +1,9 @@
-import {get, router} from 'microrouter';
-import convert from "./convert";
-import currencies from "./currencies";
-import {withContext} from "../middleware/withContext";
+import {get, post, options, router} from 'microrouter';
+import {apolloHandler, apolloWithCORS} from "../graphql/server";
 
 export default router (
-  get("/convert", withContext(convert)),
-  get("/currencies", withContext(currencies)),
+  post("/graph", apolloWithCORS),
+  get("/graph", apolloHandler),
+  options("/graph", apolloWithCORS)
 )
+
