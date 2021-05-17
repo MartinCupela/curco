@@ -6,5 +6,5 @@ import {get as config} from "config";
 
 const port = config("API.SERVER_PORT");
 const requestListener = (req, res) => run(req, res, withErrorHandler(routes));
-const index = createServer(requestListener);
-index.listen(port);
+const server = createServer(requestListener);
+server.listen(port, undefined, () => console.log(`Running on ${port}`));
