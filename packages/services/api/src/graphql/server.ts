@@ -4,7 +4,7 @@ import {FixerApi} from "@converter/libs.fixerio/src";
 import es from "@elastic/elasticsearch";
 import {get as config} from "config";
 import "./types";
-import {cors} from "../middleware/cors";
+import cors from "micro-cors";
 
 const apolloServer = new ApolloServer({
   schema: schema.buildSchema(),
