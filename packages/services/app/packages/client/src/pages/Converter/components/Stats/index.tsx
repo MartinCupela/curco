@@ -1,12 +1,12 @@
 import {Stat, StatsRoot} from "./components/Layout";
 import React from "react";
-import {GetCurrenciesData} from "../../services/graphql/queries/Currency";
+import {GetCurrenciesData} from "../../../../services/graphql/queries/Currency";
 
 interface StatsBarProps {
   data: GetCurrenciesData;
 }
 
-const StatsBar = ({data}: StatsBarProps) => {
+const Stats = ({data}: StatsBarProps) => {
   return (
     <StatsRoot>
       <Stat>
@@ -20,10 +20,10 @@ const StatsBar = ({data}: StatsBarProps) => {
       <Stat>
 
         <div className={"number"}>{data.Stats.totalConverted}</div>
-        <div className={"description"}>Total amount of money converted</div>
+        <div className={"description"}>Total amount converted</div>
       </Stat>
     </StatsRoot>
   )
 }
 
-export default StatsBar;
+export default Stats;

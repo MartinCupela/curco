@@ -32,13 +32,21 @@ export interface ConversionResultData {
 }
 
 export const convert = gql`
-  query ConvertCurrency($amount: Float!, $from:String!, $to:String!) {
+  query ConvertCurrency($amount: Float!, $from:String!, $to:String!, $currencyId:String!) {
     Conversion(amount: $amount, from:$from, to:$to) {
         from { id description }
         to { id description }
         amount
         result
         rate     
+    }
+    Stats {
+      MostPopularCurrency {
+        id
+        count
+      }
+      totalConverted(currencyId:$currencyId) 
+      totalRequests 
     }
   }
 `

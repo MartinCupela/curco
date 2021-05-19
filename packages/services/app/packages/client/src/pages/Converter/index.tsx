@@ -1,12 +1,12 @@
 import React from "react";
 import {PageBody, PageRoot} from "./components/Layout";
 import ConverterForm from "./components/ConverterForm";
-import StatsBar from "../../components/StatsBar";
 import Header from "../../components/Header";
 import {useQuery} from "@apollo/client";
 import {getCurrencies, GetCurrenciesData} from "../../services/graphql/queries/Currency";
 import LoadingConverter from "./LoadingConverter";
 import ErrorConverter from "./ErrorConverter";
+import Stats from "./components/Stats";
 
 
 const CurrencyConverter = () => {
@@ -18,7 +18,7 @@ const CurrencyConverter = () => {
   } else if (data) {
     content = <>
       <ConverterForm currencies={data.CurrencyList}/>
-      <StatsBar data={data}/>
+      <Stats data={data}/>
       </>
   }
   return <PageRoot>
