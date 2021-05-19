@@ -20,7 +20,7 @@ const Stats = ({data}: StatsBarProps) => {
       <Stat>
 
         <div className={"number"}>{data.Stats.totalConverted}</div>
-        <div className={"description"}>Total amount converted</div>
+        <div className={"description"}>Total amount converted in USD</div>
       </Stat>
     </StatsRoot>
   )

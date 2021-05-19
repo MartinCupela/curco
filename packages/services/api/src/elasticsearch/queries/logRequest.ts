@@ -6,10 +6,11 @@ interface LogRequestArgs {
   from: string;
   to: string;
   amount: number;
+  amountInUSD: number;
   elasticsearch: ElasticClient;
 }
 
-export default async function ({from, to, amount, elasticsearch}: LogRequestArgs) {
+export default async function ({from, to, amount, amountInUSD, elasticsearch}: LogRequestArgs) {
   await elasticsearch.index({
     index: "requests",
     id: uuid(),
@@ -17,6 +18,7 @@ export default async function ({from, to, amount, elasticsearch}: LogRequestArgs
       from,
       to,
       amount,
+      amountInUSD,
       when: getUnixTime(new Date())
     }
   });

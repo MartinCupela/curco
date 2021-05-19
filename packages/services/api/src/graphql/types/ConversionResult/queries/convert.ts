@@ -30,9 +30,15 @@ const convert: GraphQLFieldResolver<null, Context, ConversionArgs> =
     const date = format(new Date(), "yyyy-MM-dd");
     const rateId = makeRateId({from, date});
 
-    await logRequest({from, to, amount: _amount, elasticsearch});
+    let amountInUSD = _amount;
+    if (from !== "USD") {
+      const rateUSD = await getRate({id: rateId, destCurrency: "USD", fixerio, elasticsearch});
+      amountInUSD = _amount * rateUSD;
+    }
 
-    const rate = await getRate({id: rateId, destCurrency: to, fixerio, elasticsearch})
+    await logRequest({from, to, amount: _amount, amountInUSD, elasticsearch});
+
+    const rate = await getRate({id: rateId, destCurrency: to, fixerio, elasticsearch});
     const currencies = await fixerio.currencies();
 
     return {

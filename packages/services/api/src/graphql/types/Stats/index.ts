@@ -52,19 +52,14 @@ const Stats = schema.createObjectTC({
         const a = await elasticsearch.search({
           index: "requests",
           body: {
-            "query": {
-              "match": {
-                "to.keyword": {"query": currencyId}
-              }
-            },
             "aggs": {
-              "total_converted": {
-                "sum": {"field": "amount"}
+              "total_converted_USD": {
+                "sum": {"field": "amountInUSD"}
               }
             }
           }
         });
-        return parseFloat(a.body.aggregations.total_converted.value).toFixed(4)
+        return a.body.aggregations.total_converted_USD.value.toFixed(4)
       }
     },
     totalRequests: {
