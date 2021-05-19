@@ -1,12 +1,14 @@
-import express from "express";
 import {addDevMiddleware} from "./middleware/dev-server";
 import {get as config} from "config";
+import express from "express";
 
 const port = config("APP.SERVER_PORT")
-export const app = express();
+const app = express();
 
 if (process.env.NODE_ENV === "development") {
   addDevMiddleware(app);
+} else {
+  app.use(express.static("dist"))
 }
 
 app.listen(
