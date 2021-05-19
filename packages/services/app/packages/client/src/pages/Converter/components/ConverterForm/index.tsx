@@ -1,14 +1,15 @@
 import {TextField} from "@material-ui/core";
 import React from "react";
-import {ButtonArea, CurrencyAutocomplete, Field, Fields, SwapIcon} from "./components/Layout";
+import {ButtonArea, CurrencyAutocomplete, Field, Fields, SubmitButton, SwapIcon} from "./components/Layout";
 import Panel from "../../../../components/Panel";
-import {Button} from "../../../../components/Button";
 import {buttonThemes} from "../../../../components/Button/themes";
 import {ErrorText} from "../../../../components/Form/components/ErrorText";
 import SwapHorizontalCircleIcon from "@material-ui/icons/SwapHorizontalCircle";
 import {useConverterFormController} from "./components/ConverterFormController";
 import ConversionResultArea from "./components/ConversionResultArea";
 import {Currency} from "../../../../services/graphql/queries/Currency";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCircleNotch} from "@fortawesome/free-solid-svg-icons";
 
 interface ConverterFormProps {
   currencies: Currency[];
@@ -63,10 +64,10 @@ const ConverterForm = ({currencies}: ConverterFormProps) => {
       </Fields>
       <ButtonArea>
         <ConversionResultArea result={conversionResult}/>
-        <Button onClick={handleSubmit} theme={buttonThemes.main}
+        <SubmitButton onClick={handleSubmit} theme={buttonThemes.main}
                 disabled={Object.values(errors).some(v => v)}>
-          Submit
-        </Button>
+          {loading ? <FontAwesomeIcon icon={faCircleNotch} spin/> : "Submit"}
+        </SubmitButton>
       </ButtonArea>
     </Panel>
   );

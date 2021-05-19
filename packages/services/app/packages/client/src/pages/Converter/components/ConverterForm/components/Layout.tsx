@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import {Autocomplete} from "@material-ui/lab";
-import React from "react";
+import {Button} from "../../../../../components/Button";
 
 export const Fields = styled.div`
   display: grid;
@@ -44,6 +44,10 @@ export const ButtonArea = styled.div`
       margin: 0 2rem 2rem 0;
     }
   }
+`
+
+export const SubmitButton = styled(Button)`
+  width: 8rem;
 `
 
 export const SwapIcon = styled.span`
