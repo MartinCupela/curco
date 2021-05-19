@@ -12,7 +12,7 @@ interface Conversion {
   to: CurrencyFields;
   amount: number;
   rate: number;
-  result: number;
+  result: string;
 }
 
 
@@ -40,7 +40,7 @@ const convert: GraphQLFieldResolver<null, Context, ConversionArgs> =
       to: {id: to, description: currencies.success ? currencies.symbols[to]: ""},
       rate,
       amount: _amount,
-      result: _amount * rate
+      result: (_amount * rate).toFixed(4)
     }
 
   };
