@@ -1,6 +1,14 @@
 import styled from "styled-components";
 import {Autocomplete} from "@material-ui/lab";
 import {Button} from "../../../../../components/Button";
+import Panel from "../../../../../components/Panel";
+
+export const ConverterFormPanel = styled(Panel)`
+  margin-top: 2rem;
+  @media(max-width: 640px) {
+    width: 100%;
+  }
+`
 
 export const Fields = styled.div`
   display: grid;

@@ -1,6 +1,14 @@
 import {TextField} from "@material-ui/core";
 import React from "react";
-import {ButtonArea, CurrencyAutocomplete, Field, Fields, SubmitButton, SwapIcon} from "./components/Layout";
+import {
+  ButtonArea,
+  ConverterFormPanel,
+  CurrencyAutocomplete,
+  Field,
+  Fields,
+  SubmitButton,
+  SwapIcon
+} from "./components/Layout";
 import Panel from "../../../../components/Panel";
 import {buttonThemes} from "../../../../components/Button/themes";
 import {ErrorText} from "../../../../components/Form/components/ErrorText";
@@ -29,7 +37,7 @@ const ConverterForm = ({currencies}: ConverterFormProps) => {
   } = useConverterFormController(currencies)
 
   return (
-    <Panel>
+    <ConverterFormPanel>
       <Fields>
         <Field>
           <TextField label="Amount" defaultValue={selected.amount}
@@ -69,7 +77,7 @@ const ConverterForm = ({currencies}: ConverterFormProps) => {
           {loading ? <FontAwesomeIcon icon={faCircleNotch} spin/> : "Submit"}
         </SubmitButton>
       </ButtonArea>
-    </Panel>
+    </ConverterFormPanel>
   );
 }
 

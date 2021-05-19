@@ -64,7 +64,7 @@ const Stats = schema.createObjectTC({
             }
           }
         });
-        return a.body.aggregations.total_converted.value
+        return parseFloat(a.body.aggregations.total_converted.value).toFixed(4)
       }
     },
     totalRequests: {
