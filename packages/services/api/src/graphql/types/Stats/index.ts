@@ -37,11 +37,11 @@ const Stats = schema.createObjectTC({
                   }
                 }
               }
-
             }
           }
         });
-        const {key, doc_count} = apiResponse.body.aggregations.quote_counts.buckets[0] || {key: undefined, doc_count: 0};
+        const bucket = apiResponse.body.aggregations.quote_counts.buckets[0];
+        const {key, doc_count} = bucket || {key: undefined, doc_count: 0};
         return {id: key, count: doc_count};
       }
     },
