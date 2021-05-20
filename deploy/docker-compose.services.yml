@@ -1,0 +1,19 @@
+version: '2.3'
+services:
+  app:
+    image: "curco.app:latest"
+
+    ports:
+    - "127.0.0.1:3000:3000"
+
+    volumes:
+    - ../config:/curco/config:ro
+
+  api:
+    image: "curco.api:latest"
+
+    volumes:
+     - ../config:/curco/config:ro
+
+    ports:
+      - "127.0.0.1:3001:3001"
