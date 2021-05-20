@@ -10,7 +10,7 @@ const Stats = ({data: {MostPopularCurrency, totalConverted, totalRequests}}: Sta
   return (
     <StatsRoot>
       <Stat>
-        <div className={"number"}>{MostPopularCurrency.id}</div>
+        <div className={"number"}>{MostPopularCurrency.id || "?"}</div>
         <div className={"description"}>Most popular currency</div>
       </Stat>
       <Stat>
