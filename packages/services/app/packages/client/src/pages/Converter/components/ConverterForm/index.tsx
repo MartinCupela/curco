@@ -50,8 +50,8 @@ const ConverterForm = ({currencies}: ConverterFormProps) => {
             value={selected.base}
             options={currencies}
             getOptionLabel={(option) => (option as Currency).id}
-            getOptionSelected={(option, value) => (option as Currency).id === (value as Currency).id }
-            onInputChange={(event, value) => handleCurrencyFieldChange({value: value as any, field: "base"})}
+            getOptionSelected={(option, value) => (option as Currency).id === (value as Currency).id}
+            onChange={(event, value) => handleCurrencyFieldChange({value: value as any, field: "base"})}
             renderInput={(params) => <TextField {...params} label="From"/>}
           />
           <ErrorText msg={errors.base}/>
@@ -64,7 +64,7 @@ const ConverterForm = ({currencies}: ConverterFormProps) => {
             options={currencies.filter(c => c.id !== selected.base?.id)}
             getOptionLabel={(option) => (option as Currency).id}
             getOptionSelected={(option, value) => (option as Currency).id === (value as Currency).id }
-            onInputChange={(event, value) => handleCurrencyFieldChange({value: value as any, field: "quote"})}
+            onChange={(event, value) => handleCurrencyFieldChange({value: value as any, field: "quote"})}
             renderInput={(params) => <TextField {...params} label="To"/>}
           />
           <ErrorText msg={errors.quote}/>

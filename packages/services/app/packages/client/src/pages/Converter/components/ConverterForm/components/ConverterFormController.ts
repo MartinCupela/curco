@@ -48,7 +48,7 @@ interface ConverterFormController {
 }
 
 interface HandleCurrencyFieldChangeArgs {
-  value?: string;
+  value?: Currency;
   field: "base" | "quote";
 }
 
@@ -96,11 +96,10 @@ export const useConverterFormController = (currencies: Currency[]): ConverterFor
   }
 
   const handleCurrencyFieldChange = ({value, field}: HandleCurrencyFieldChangeArgs) => {
-
     if (value) {
       setSelected({
         ...selected,
-        [field]: {id: value, description: currencies.find(({id}) => id === value)}
+        [field]: {id: value?.id, description: value?.description}
       });
 
       if (errors[field]) {
