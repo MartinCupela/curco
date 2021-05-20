@@ -10,7 +10,7 @@ import Stats from "./components/Stats";
 
 
 const CurrencyConverter = () => {
-  const {loading, data, error} = useQuery<GetCurrenciesData>(getCurrencies, {variables: {currencyId: "USD"}})
+  const {loading, data, error} = useQuery<GetCurrenciesData>(getCurrencies)
 
   let content = <LoadingConverter/>
   if (error) {

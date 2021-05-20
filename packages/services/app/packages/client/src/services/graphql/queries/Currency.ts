@@ -16,7 +16,7 @@ export interface GetCurrenciesData {
 }
 
 export const getCurrencies = gql`
-  query GetCurrencies($currencyId:String!) {
+  query GetCurrencies {
     CurrencyList {
       id
       description
@@ -26,7 +26,7 @@ export const getCurrencies = gql`
         id
         count
       }
-      totalConverted(currencyId:$currencyId) 
+      totalConverted
       totalRequests 
     }
       

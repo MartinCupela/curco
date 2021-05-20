@@ -47,8 +47,7 @@ const Stats = schema.createObjectTC({
     },
     totalConverted: {
       type: "Float",
-      args: {currencyId: {type: "String!"}},
-      resolve: async (_, {currencyId}, {elasticsearch}) => {
+      resolve: async (_, __, {elasticsearch}) => {
         const a = await elasticsearch.search({
           index: "requests",
           body: {
@@ -77,19 +76,23 @@ const Stats = schema.createObjectTC({
   }
 });
 
+export const getStatsSeed = () => ({
+  MostPopularCurrency: undefined,
+  totalConverted: undefined,
+  totalRequests: undefined,
+})
+
 schema.Query.addFields({
 
   Stats: {
     type: "Stats",
     args: {},
-    resolve: async () => ({
-      MostPopularCurrency: undefined,
-      totalConverted: undefined,
-      totalRequests: undefined,
-    })
+    resolve: getStatsSeed
   }
 
 });
+
+
 
 
 export default Stats;

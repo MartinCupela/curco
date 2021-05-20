@@ -56,7 +56,7 @@ interface HandleCurrencyFieldChangeArgs {
 export const useConverterFormController = (currencies: Currency[]): ConverterFormController => {
   const [selected, setSelected] = useState<ConverterFormValues>({amount: "1", base: null, quote: null});
   const [errors, setError] = useState<ErrorState>({});
-  const [convert, {data, loading, error}] = useLazyQuery<ConversionResultData, ConversionArgs & {currencyId: string}>(convertQuery);
+  const [convert, {data, loading, error}] = useLazyQuery<ConversionResultData, ConversionArgs>(convertQuery);
 
   const validateAmountValue = (value: string): string | undefined => {
     const isFloatString = value.match(/^\d+(\.{1}\d*)?$/);
@@ -133,7 +133,6 @@ export const useConverterFormController = (currencies: Currency[]): ConverterFor
             from: selected.base?.id as string,
             to: selected.quote?.id as string,
             amount: selected.amount ? parseFloat(selected.amount) : undefined,
-            currencyId: "USD"
           }
         })
       }
