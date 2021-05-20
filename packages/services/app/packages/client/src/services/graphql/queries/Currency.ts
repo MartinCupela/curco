@@ -5,14 +5,15 @@ export type Currency = {
   description: string;
 }
 
+export type Stats = {
+  MostPopularCurrency: { id: string; count: number };
+  totalConverted: number;
+  totalRequests: number;
+}
+
 export interface GetCurrenciesData {
   CurrencyList: Currency[];
-  Stats: {
-    MostPopularCurrency: { id: string; count: number };
-    totalConverted: number;
-    totalRequests: number;
-  }
-
+  Conversion: { Stats: Stats };
 }
 
 export const getCurrencies = gql`
@@ -21,14 +22,17 @@ export const getCurrencies = gql`
       id
       description
     }
-    Stats {
-      MostPopularCurrency {
-        id
-        count
+    Conversion {
+      Stats {
+        MostPopularCurrency {
+          id
+          count
+        }
+        totalConverted
+        totalRequests 
       }
-      totalConverted
-      totalRequests 
     }
+    
       
   }
 `

@@ -39,15 +39,14 @@ export const convert = gql`
       amount
       result
       rate
-    }
-    Stats {
-      MostPopularCurrency {
-        id
-        count
-      }
-      totalConverted
-      totalRequests 
-    }  
-    
+      Stats {
+        MostPopularCurrency {
+          id
+          count
+        }
+        totalConverted
+        totalRequests 
+      }  
+    }   
   }
 `

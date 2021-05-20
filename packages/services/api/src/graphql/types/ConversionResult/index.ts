@@ -1,6 +1,7 @@
 import schema from "../../schema";
 import convert from "./queries/convert";
 import Currency from "../Currency";
+import Stats, {getStatsSeed} from "../Stats";
 
 
 const Conversion = schema.createObjectTC({
@@ -25,6 +26,10 @@ const Conversion = schema.createObjectTC({
     rate: {
       type: "String",
       resolve: (c) => c.rate
+    },
+    Stats:{
+      type: Stats,
+      resolve: ({Stats}) => Stats
     }
   }
 });
@@ -33,11 +38,20 @@ schema.Query.addFields({
   Conversion: {
     type: () => Conversion,
     args: {
-      from: {type: "String!"},
-      to: {type: "String!"},
+      from: {type: "String"},
+      to: {type: "String"},
       amount: {type: "Float"},
     },
-    resolve: convert,
+    resolve: async (_, args, context, info) => {
+      let conversionResult = {};
+      if (args.from && args.to) {
+        conversionResult = await convert(_, args, context, info);
+      }
+      return ({
+        ...conversionResult,
+        Stats: getStatsSeed()
+      });
+    },
   }
 });
 

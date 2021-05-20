@@ -18,7 +18,7 @@ const CurrencyConverter = () => {
   } else if (data) {
     content = <>
       <ConverterForm currencies={data.CurrencyList}/>
-      <Stats data={data}/>
+      <Stats data={data.Conversion.Stats}/>
       </>
   }
   return <PageRoot>
