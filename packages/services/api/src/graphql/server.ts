@@ -17,11 +17,7 @@ const apolloServer = new ApolloServer({
       currencies: await fixerio.currencies(),
       fixerio,
       elasticsearch: new es.Client({
-        node: config("ELASTICSEARCH.HOST"),
-        auth: {
-          username: "elastic",
-          password: config("ELASTICSEARCH.PASSWORD")
-        }
+        node: config("ELASTICSEARCH.HOST")
       })
     });
   }
