@@ -5,7 +5,7 @@
     "docker:prebuild": "docker-compose -f deploy/build/docker-compose.common.build.yml build",
     "docker:build": "docker-compose -f deploy/build/docker-compose.build.yml build",
     "docker:services": "docker-compose -f deploy/docker-compose.services.yml up",
-    "docker:db": "env-cmd -f .env -- docker-compose -f deploy/docker-compose.db.yml up",
+    "docker:db": "docker-compose -f deploy/docker-compose.db.yml up",
     "docker:up": "docker-compose -f deploy/docker-compose.yml up",
     "dev:app": "cd packages/services/app && yarn dev",
     "build:app": "cd packages/services/app && yarn build",
