@@ -3,6 +3,11 @@ import convert from "./queries/convert";
 import Currency from "../Currency";
 import Stats, {getStatsSeed} from "../Stats";
 
+function sleep(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms)
+  })
+}
 
 const Conversion = schema.createObjectTC({
   name: "Conversion",
@@ -27,7 +32,7 @@ const Conversion = schema.createObjectTC({
       type: "String",
       resolve: (c) => c.rate
     },
-    Stats:{
+    Stats: {
       type: Stats,
       resolve: ({Stats}) => Stats
     }
@@ -47,6 +52,8 @@ schema.Query.addFields({
       if (args.from && args.to) {
         conversionResult = await convert(_, args, context, info);
       }
+      // todo: remove this dirty trick by implementing subscriptions for stats;
+      await sleep(800);
       return ({
         ...conversionResult,
         Stats: getStatsSeed()
