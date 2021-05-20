@@ -10,7 +10,7 @@ import initIndices from "../elasticsearch/helpers/initIndices";
 initIndices({
   indices: ["requests", "rates"],
   elasticsearch: CONTEXT.elasticsearch
-})
+}).catch(e => console.error("Failed to init Elasticsearch indices"))
 
 const apolloServer = new ApolloServer({
   schema: schema.buildSchema(),

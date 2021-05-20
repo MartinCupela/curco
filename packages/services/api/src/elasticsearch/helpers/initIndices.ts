@@ -9,7 +9,8 @@ async function initIndices({indices, elasticsearch}: InitIndicesArgs) {
   for (let index of indices) {
     const existsResponse = await elasticsearch.indices.exists({index});
     if (!existsResponse.body) {
-      await elasticsearch.indices.create({index})
+      await elasticsearch.indices.create({index});
+      console.log("Initialized index:", index);
     }
   }
 }
