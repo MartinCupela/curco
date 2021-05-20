@@ -48,8 +48,12 @@ export const ButtonArea = styled.div`
   flex-wrap: wrap;
   
   @media(max-width: 640px) {
+  flex-direction: column;
+  align-items: flex-end;
     & > :first-child {
-      margin: 0 2rem 2rem 0;
+      margin-bottom: 2rem;
+      min-height: 2.5rem;
+      width: 100%;
     }
   }
 `
