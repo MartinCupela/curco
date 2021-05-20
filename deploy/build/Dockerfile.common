@@ -1,0 +1,12 @@
+FROM node:lts-alpine
+
+COPY package.json lerna.json yarn.lock tsconfig.json /curco/
+COPY packages/libs/fixerio /curco/packages/libs/fixerio
+
+VOLUME /curco/config
+
+ENV NODE_CONFIG_DIR=/curco/config
+
+RUN apk add --update git && \
+    rm /usr/local/bin/yarn /usr/local/bin/yarnpkg && \
+    npm i -g lerna yarn

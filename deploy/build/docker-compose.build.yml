@@ -1,0 +1,13 @@
+version: '2.3'
+services:
+  app:
+    image: "curco.app"
+    build:
+      context: "../../"
+      dockerfile: "packages/services/app/Dockerfile"
+
+  api:
+    image: "curco.api"
+    build:
+      context: "../../"
+      dockerfile: "packages/services/api/Dockerfile"

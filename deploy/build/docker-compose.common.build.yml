@@ -1,0 +1,7 @@
+version: '2.3'
+services:
+  common:
+    image: "curco.common"
+    build:
+      context: "../../"
+      dockerfile: "deploy/build/Dockerfile.common"
