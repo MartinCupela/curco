@@ -2,7 +2,14 @@
   "name": "curco",
   "private": true,
   "scripts": {
-    "db": "env-cmd -f .env -- docker-compose -f deploy/docker-compose.staging.yml up"
+    "docker:prebuild": "docker-compose -f deploy/build/docker-compose.common.build.yml build",
+    "docker:build": "docker-compose -f deploy/build/docker-compose.build.yml build",
+    "docker:up": "docker-compose -f deploy/docker-compose.services.yml up",
+    "dev:app": "cd packages/services/app && yarn dev",
+    "build:app": "cd packages/services/app && yarn build",
+    "start:app": "cd packages/services/app && yarn start",
+    "start:api": "cd packages/services/api && yarn start",
+    "db": "env-cmd -f .env -- docker-compose -f deploy/docker-compose.db.yml up"
   },
   "repository": "git@github.com:MartinCupela/curco.git",
   "workspaces": [
