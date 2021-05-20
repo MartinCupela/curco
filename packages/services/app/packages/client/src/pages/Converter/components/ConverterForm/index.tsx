@@ -74,7 +74,7 @@ const ConverterForm = ({currencies}: ConverterFormProps) => {
         <ConversionResultArea result={conversionResult}/>
         <SubmitButton onClick={handleSubmit} theme={buttonThemes.main}
                 disabled={Object.values(errors).some(v => v)}>
-          {loading ? <FontAwesomeIcon icon={faCircleNotch} spin/> : "Submit"}
+          {loading ? <FontAwesomeIcon icon={faCircleNotch} spin/> : "Convert"}
         </SubmitButton>
       </ButtonArea>
     </ConverterFormPanel>
