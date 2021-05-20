@@ -34,7 +34,7 @@ const ConverterForm = ({currencies}: ConverterFormProps) => {
     swapCurrencies,
     loading,
     apolloError
-  } = useConverterFormController(currencies)
+  } = useConverterFormController()
 
   return (
     <ConverterFormPanel>

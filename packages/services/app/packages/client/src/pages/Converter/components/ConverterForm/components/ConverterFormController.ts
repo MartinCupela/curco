@@ -53,7 +53,7 @@ interface HandleCurrencyFieldChangeArgs {
 }
 
 
-export const useConverterFormController = (currencies: Currency[]): ConverterFormController => {
+export const useConverterFormController = (): ConverterFormController => {
   const [selected, setSelected] = useState<ConverterFormValues>({amount: "1", base: null, quote: null});
   const [errors, setError] = useState<ErrorState>({});
   const [convert, {data, loading, error}] = useLazyQuery<ConversionResultData, ConversionArgs>(convertQuery);
