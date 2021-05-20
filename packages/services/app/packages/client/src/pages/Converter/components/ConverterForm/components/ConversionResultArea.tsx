@@ -13,8 +13,8 @@ const ConversionResultArea = ({result}: ConversionResultProps) => {
     <ResultRoot>
       {result ? (
           <>
-            <BaseCurrency> {result.amount} {result.from.description} =</BaseCurrency>
-            <QuoteCurrency>{result.result} {result.to.description}</QuoteCurrency>
+            <BaseCurrency title={result.from.description}> {result.amount} {result.from.description} =</BaseCurrency>
+            <QuoteCurrency title={result.to.description}>{result.result} {result.to.description}</QuoteCurrency>
           </>
         )
         : null}
@@ -30,12 +30,22 @@ export const ResultRoot = styled.div`
   animation: fadeIn;
   animation-duration: 2s;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: fade;
 `
 
 export const BaseCurrency = styled.div`
   font-size: 18px;
+  margin-bottom: .5rem;
+  @media(max-width: 640px) {
+    font-size: 16px;
+  }
 `
 
 export const QuoteCurrency = styled.div`
   font-size: 28px;
+  
+  @media(max-width: 640px) {
+    font-size: 20px;
+  }
 `
