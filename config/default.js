@@ -9,7 +9,6 @@ module.exports = {
     API_KEY: "<API.API_KEY>",
   },
   ELASTICSEARCH: {
-    HOST: "http://localhost:9200",
-    PASSWORD: "<ELASTICSEARCH.PASSWORD>"
+    HOST: "http://elasticsearch:9200",
   }
 }
